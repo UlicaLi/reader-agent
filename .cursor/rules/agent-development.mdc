@@ -1,0 +1,57 @@
+# 代理开发规范
+
+## 子代理结构
+
+每个子代理目录必须包含：
+
+- `agent.py` - 代理主要逻辑
+- `prompt.py` - 提示词模板
+- `tools/` - 代理专用工具目录
+
+## 代理命名约定
+
+- 代理类名使用 PascalCase：`AnkiAgent`、`SummarizeAgent`
+- 代理目录使用 snake_case：`anki_agent`、`summarize_agent`
+- 工具函数使用 snake_case：`create_anki_card`、`generate_summary`
+
+## 提示词管理
+
+提示词应该：
+
+- 存储在 `prompt.py` 文件中
+- 使用常量定义：`SYSTEM_PROMPT`、`USER_PROMPT`
+- 支持模板变量替换
+- 包含中文说明注释
+
+示例：
+
+```python
+# prompt.py
+SYSTEM_PROMPT = """
+你是一个专业的 Anki 卡片生成助手。
+你的任务是根据用户提供的内容生成高质量的 Anki 卡片。
+"""
+
+USER_PROMPT = """
+请为以下内容生成 Anki 卡片：
+{content}
+
+要求：
+1. 问题清晰明确
+2. 答案简洁准确
+3. 适合记忆学习
+"""
+```
+
+## 工具开发
+
+- 每个工具函数应该有清晰的职责
+- 使用类型注解
+- 包含详细的文档字符串
+- 处理异常情况
+
+## 代理集成
+
+- 主代理通过 [agent.py](mdc:src/agent/agent.py) 协调子代理
+- 子代理应该可以独立运行和测试
+- 使用统一的输入/输出格式

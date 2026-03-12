@@ -1,0 +1,67 @@
+# Python 编码标准
+
+## 代码风格
+
+- 遵循 PEP 8 标准
+- 使用 4 个空格缩进
+- 行长度限制为 88 字符（Black 格式化器标准）
+- 使用类型注解（Type Hints）
+
+## 导入规范
+
+```python
+# 标准库导入
+import os
+import sys
+from typing import Optional, List, Dict
+
+# 第三方库导入
+from fastapi import FastAPI, HTTPException
+from langchain.agents import Agent
+
+# 本地导入
+from .config import settings
+from .tools import SomeTool
+```
+
+## 代理类结构
+
+每个代理应该遵循以下结构：
+
+```python
+class SomeAgent:
+    def __init__(self, config: dict):
+        self.config = config
+        self.tools = self._load_tools()
+    
+    def _load_tools(self) -> List[Tool]:
+        """加载代理工具"""
+        pass
+    
+    def run(self, input_data: dict) -> dict:
+        """执行代理任务"""
+        pass
+```
+
+## 错误处理
+
+- 使用适当的异常类型
+- 提供清晰的错误信息
+- 记录错误日志
+
+## 文档字符串
+
+使用中文文档字符串：
+
+```python
+def process_text(text: str) -> str:
+    """
+    处理输入文本
+    
+    Args:
+        text: 待处理的文本
+        
+    Returns:
+        处理后的文本
+    """
+```

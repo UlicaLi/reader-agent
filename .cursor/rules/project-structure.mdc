@@ -1,0 +1,37 @@
+# Yogu Reader Agent 项目结构指南
+
+这是一个基于 FastAPI 的智能阅读代理项目，使用 LangChain 构建多个专门的子代理。
+
+## 项目架构
+
+### 核心目录结构
+
+- `src/agent/` - 主代理和子代理实现
+  - `agent.py` - 主代理入口点
+  - `prompt.py` - 主代理提示词模板
+  - `sub_agents/` - 专门的子代理
+    - `anki_agent/` - Anki 卡片生成代理
+    - `mindmap_agent/` - 思维导图生成代理
+    - `summarize_agent/` - 内容总结代理
+    - `translate_agent/` - 翻译代理
+  - `tools/` - 主代理工具集
+- `src/app/` - Web 应用和服务器
+  - `server.py` - FastAPI 服务器入口点
+  - `config.py` - 应用配置
+  - `middleware.py` - 中间件
+  - `ocr/` - OCR 相关功能
+    - `dolphin_client.py` - Dolphin OCR 客户端
+
+### 技术栈
+
+- **FastAPI** - Web 框架
+- **LangChain** - AI 代理框架
+- **Google ADK** - Google 服务集成
+- **Requests** - HTTP 客户端
+- **SlowAPI** - 限流中间件
+
+### 开发约定
+
+- 每个子代理都有独立的 `agent.py`、`prompt.py` 和 `tools/` 目录
+- 使用 Python 3.12+
+- 项目使用 uv 作为包管理器

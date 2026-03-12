@@ -1,0 +1,66 @@
+# FastAPI 开发规范
+
+## 服务器结构
+
+主要文件：
+
+- [server.py](mdc:src/app/server.py) - FastAPI 应用入口
+- [config.py](mdc:src/app/config.py) - 应用配置
+- [middleware.py](mdc:src/app/middleware.py) - 中间件配置
+
+## 路由规范
+
+```python
+from fastapi import APIRouter, HTTPException
+from pydantic import BaseModel
+
+router = APIRouter(prefix="/api/v1", tags=["agents"])
+
+class ProcessRequest(BaseModel):
+    content: str
+    agent_type: str
+
+@router.post("/process")
+async def process_content(request: ProcessRequest):
+    """处理内容请求"""
+    try:
+        # 处理逻辑
+        return {"status": "success", "result": result}
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+```
+
+## 中间件使用
+
+- 使用 SlowAPI 进行限流
+- 添加 CORS 中间件
+- 记录请求日志
+
+## 错误处理
+
+- 使用适当的 HTTP 状态码
+- 返回结构化的错误响应
+- 记录错误日志
+
+## 配置管理
+
+使用 Pydantic Settings：
+
+```python
+from pydantic_settings import BaseSettings
+
+class Settings(BaseSettings):
+    app_name: str = "Yogu Reader Agent"
+    debug: bool = False
+    
+    class Config:
+        env_file = ".env"
+```
+
+## OCR 集成
+
+OCR 功能位于 [ocr/dolphin_client.py](mdc:src/app/ocr/dolphin_client.py)
+
+- 处理图像输入
+- 返回文本结果
+- 错误处理和重试机制
